@@ -26,6 +26,9 @@ input.editable-invalid {
 tr.editable-editing > td:not(.editable-action-column), tr.editable-new-row > td:not(.editable-action-column) {
 	padding: 0;
 }
+tr.editable-editing {
+	outline: 2px solid #a1c3fa;
+}
 h1 {
 	font-size: 2em;
 	position: fixed;
