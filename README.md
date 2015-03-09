@@ -14,6 +14,7 @@ tukee vain suomen kieltä.
 - Järjestäminen sarakkeen mukaan
 - Syötteen tarkka validointi
 - HTML5-validoinnin ja -kenttien hyödyntäminen
+- Lukee tiedot JSON-muodossa tai HTML-taulukosta
 
 [Testisivusto](http://koti.kapsi.fi/~torava/henkilost0/?#)
 
