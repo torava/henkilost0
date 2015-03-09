@@ -2,7 +2,8 @@
 
 Frontend-toteutus henkilötietojen muokkaukselle. Hyödyntää Editable Table -pluginia.
 Arpoo joukon validia koeaineistoa. Toiminta taattu vain uusimmalla Chromella, mutta on
-mahdollista parantaa selainriippumattomuutta polyfillejä käyttämällä.
+mahdollista parantaa selainriippumattomuutta polyfillejä käyttämällä. Tällä hetkellä
+tukee vain suomen kieltä.
 
 ## Ominaisuuksia
 
@@ -14,4 +15,5 @@ mahdollista parantaa selainriippumattomuutta polyfillejä käyttämällä.
 - Syötteen tarkka validointi
 - HTML5-validoinnin ja -kenttien hyödyntäminen
 
+[Testisivusto](http://koti.kapsi.fi/~torava/henkilost0/?#)
 [Editable Tablen API](http://koti.kapsi.fi/~torava/henkilost0/doc/)
