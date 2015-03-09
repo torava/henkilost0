@@ -3,7 +3,7 @@
  * @fileOverview A plugin for making HTML tables editable.
  * @author Teemu Orava
  * @copyright Teemu Orava 2015
- * @version 1.0
+ * @version 1.1
  * @requires jquery.js
  * @requires jquery.sortElements.js
  * @requires jquery.ui.js
@@ -16,10 +16,10 @@
  * a namespace for editable table
  * @namespace teemu
 */
-
 String.prototype.repeat = function(n) {
 	return Array(n+1).join(this);
 }
+// polyfill inspired by http://tjvantoll.com/2015/01/28/reportvalidity/
 if (!HTMLFormElement.prototype.reportValidity) {
 	HTMLFormElement.prototype.reportValidity = function() {
 		var $form = $(this).parents('form:eq(0)');
@@ -175,6 +175,7 @@ if (!HTMLFormElement.prototype.reportValidity) {
 		 * @memberof editableTable
 		 */
 		setValue: function(cell, value, skip_validation) {
+			if (value === false) return;
 			if (skip_validation) validated = value;
 			else {
 				var validated = this._validateValue(value, this.structure[i]);
@@ -195,9 +196,13 @@ if (!HTMLFormElement.prototype.reportValidity) {
 		*/
 		_updateLayout: function() {
 			// adjust header widths to match content
-			var columns = $('tbody:eq(0) > tr:eq(0) > td', this.element);
-			$('th', this.element).each(function(i) {
-				$(this).css('width', columns.eq(i).outerWidth()+'px');
+			var headers = $('th', this.element),
+				new_columns = $('tbody:eq(0) > tr.editable-new-row > td', this.element),
+				width;
+			$('tbody:eq(0) > tr:eq(0) > td', this.element).each(function(i) {
+				width = $(this).outerWidth();
+				headers.eq(i).css('width', width);
+				new_columns.eq(i).css('width', width);
 			})
 		},
 		/**
@@ -298,7 +303,6 @@ if (!HTMLFormElement.prototype.reportValidity) {
 						input[0].setCustomValidity(!input.val() && input.attr('required') ? '' : input.attr('validationMessage'));
 
 						// fire validation check for the first element
-						// polyfill inspired by http://tjvantoll.com/2015/01/28/reportvalidity/
 						if (!invalid) {
 							input.parent()[0].reportValidity();
 						}

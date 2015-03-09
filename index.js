@@ -7,16 +7,24 @@ $(function() {
 		var firstnames = ("Juhani,Johannes,Olavi,Antero,Tapani,Kalevi,Tapio,Matti,Mikael,Ilmari,Maria,Helena,Johanna,Anneli,Kaarina,Marjatta,Anna,Liisa,Annikki,Hannele,"+
 						  "Matias,Ville,Oskari,Kristian,Ville,Teemu,Aleksi,Emilia,Sofia,Katariina,Karoliina,Elina,Kristiina,Eveliina,Susanna").split(","),
 			surnames = "Korhonen,Virtanen,Mäkinen,Nieminen,Mäkelä,Hämäläinen,Laine,Heikkinen,Koskinen,Järvinen,Teekkari,Tapio".split(","),
-			startdate = new Date(1890,1,1),
+			startdate = new Date(1950,1,1),
 			enddate = new Date(2010,1,1),
 			birth_date = new Date(startdate.getTime()+Math.random()*(enddate.getTime()-startdate.getTime())),
 			birth_year = birth_date.getFullYear(),
 			birthday = birth_year+'-'+leadingzeros(birth_date.getMonth()+1, 2)+'-'+leadingzeros(birth_date.getDate(), 2),
-			id_num = get_part_of_id_num_from_birth_date(birth_date);
+			id_num = get_part_of_id_num_from_birth_date(birth_date),
+			first_name = firstnames[Math.floor(Math.random()*firstnames.length)],
+			surname = surnames[Math.floor(Math.random()*surnames.length)],
+			email = ((Math.random() < 0.5 ?
+					(first_name+'.'+surname).toLowerCase() :
+					first_name.toLowerCase()+birth_year))
+					.replace(/ä/g, 'a').replace(/ö/g, 'o')
+					+'@suomi24.fi';
 
 		id_num+= leadingzeros(Math.floor(2+Math.random()*198), 3);
 		id_num+= id_num_hashes[parseInt(id_num.substring(0,6)+id_num.substring(7,10)) % 31];
-		return [firstnames[Math.floor(Math.random()*firstnames.length)], surnames[Math.floor(Math.random()*surnames.length)], id_num, birthday];
+
+		return [first_name, surname, email, id_num, birthday];
 	}
 	function validate_id_num(value) {
 		// ppkkvvyzzzq
@@ -83,7 +91,8 @@ $(function() {
 
 		year = year.toString();
 
-		return year+'-'+month+'-'+day; 
+		var date = year+'-'+month+'-'+day;
+		return isNaN(Date.parse(date)) ? false : date;
 	}
 	function get_part_of_id_num_from_birth_date(birth_date) {
 		var birth_year = birth_date.getFullYear().toString();
@@ -108,10 +117,10 @@ $(function() {
 		},
 		validate: function(e) {
 			var inputs = $(e.originalEvent.target).parents('tr').find('input');
-			inputs[2].value && inputs.eq(2).attr('validationMessage', 'Antamasi henkilötunnus on virheellinen.')[0].setCustomValidity('');
+			inputs[3].value && inputs.eq(3).attr('validationMessage', 'Antamasi henkilötunnus on virheellinen.')[0].setCustomValidity('');
 			// if birth date and identification number does not match raise error on corresponding cell
-			if (inputs[2].value && inputs[3].value && inputs[3].value !== get_birth_date_from_id_num(inputs[2].value)) {
-				inputs.eq(3).attr('validationMessage', 'Antamasi henkilötunnus ja syntymäaika eivät täsmää.')[0].setCustomValidity(true);
+			if (inputs[3].value && inputs[4].value && inputs[4].value !== get_birth_date_from_id_num(inputs[3].value)) {
+				inputs.eq(4).attr('validationMessage', 'Antamasi henkilötunnus ja syntymäaika eivät täsmää.')[0].setCustomValidity(true);
 			}
 			else {
 				inputs[3].setCustomValidity('');
@@ -123,11 +132,12 @@ $(function() {
 				columns = cell.parent().children('td'),
 				value = e.originalEvent.target.value,
 				id = that.structure[cell.index()].id;
-			if (id == 'id_num' && !columns.eq(3).find('input').val()) {
-				that.setValue(columns.eq(3), get_birth_date_from_id_num(value), true);
+			// 0 = first_name, 1 = surname, 2 = email, 3 = id_num, 4 = birth_date
+			if (id == 'id_num' && !columns.eq(4).find('input').val()) {
+				that.setValue(columns.eq(4), get_birth_date_from_id_num(value), true);
 			}
-			else if (id == 'birth_date' && !columns.eq(2).find('input').val()) {
-				that.setValue(columns.eq(2), get_part_of_id_num_from_birth_date(new Date(Date.parse(value))), true);
+			else if (id == 'birth_date' && !columns.eq(3).find('input').val()) {
+				that.setValue(columns.eq(3), get_part_of_id_num_from_birth_date(new Date(Date.parse(value))), true);
 			}
 		}
 	})
@@ -140,6 +150,11 @@ $(function() {
 			{
 				id: "surname",
 				title: "Sukunimi",
+			},
+			{
+				id: "email",
+				title: "Sähköposti",
+				type: "email",
 			},
 			{
 				id: "id_num",
