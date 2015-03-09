@@ -1,6 +1,6 @@
 # v-henkilosto
 
-Frontend-toteutus henkilötietojen muokkaukselle. Hyödyntää editable table -pluginia.
+Frontend-toteutus henkilötietojen muokkaukselle. Hyödyntää Editable Table -pluginia.
 Arpoo joukon validia koeaineistoa. Toiminta taattu vain uusimmalla Chromella, mutta on
 mahdollista parantaa selainriippumattomuutta polyfillejä käyttämällä.
 
@@ -13,3 +13,5 @@ mahdollista parantaa selainriippumattomuutta polyfillejä käyttämällä.
 - Järjestäminen sarakkeen mukaan
 - Syötteen tarkka validointi
 - HTML5-validoinnin ja -kenttien hyödyntäminen
+
+[Editable Tablen API](http://koti.kapsi.fi/~torava/henkilost0/doc/)
