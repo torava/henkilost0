@@ -1,4 +1,4 @@
-# v-henkilosto
+# henkilost0
 
 Frontend-toteutus henkilötietojen muokkaukselle. Hyödyntää Editable Table -pluginia.
 Arpoo joukon validia koeaineistoa. Toiminta taattu vain uusimmalla Chromella, mutta on
