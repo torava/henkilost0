@@ -2,8 +2,7 @@
 
 Frontend-toteutus henkilötietojen muokkaukselle. Hyödyntää Editable Table -pluginia.
 Arpoo joukon validia koeaineistoa. Toiminta taattu vain uusimmalla Chromella, mutta on
-mahdollista parantaa selainriippumattomuutta polyfillejä käyttämällä. Tällä hetkellä
-tukee vain suomen kieltä.
+mahdollista parantaa selainriippumattomuutta polyfillejä käyttämällä.
 
 ## Ominaisuuksia
 
