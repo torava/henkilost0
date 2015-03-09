@@ -1,0 +1,9 @@
+h1, .editable-table tbody, .editable-table thead {
+	position: static;
+}
+.editable-new-row {
+	display: none;
+}
+.editable-action-column {
+	display: none;
+}
